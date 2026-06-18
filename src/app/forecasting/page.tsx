@@ -79,7 +79,7 @@ export default function ForecastingPage() {
             <SelectTrigger className="w-[180px] bg-accent/40 border-border/30">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent className="bg-card/95 backdrop-blur-xl border-border/50">
+            <SelectContent className="bg-card border-border/50">
               {POPULAR_ROUTES.slice(0, 10).map((r) => (
                 <SelectItem key={`${r.origin}-${r.destination}`} value={`${r.origin}-${r.destination}`}>
                   {r.label}
@@ -107,7 +107,7 @@ export default function ForecastingPage() {
       {/* Metrics Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {metricCards.map((m, i) => (
-          <div key={m.label} className="glass-card p-5 animate-fade-in" style={{ animationDelay: `${i * 80}ms` }}>
+          <div key={m.label} className="bg-card border border-border/40 shadow-sm rounded-xl p-5 animate-fade-in" style={{ animationDelay: `${i * 80}ms` }}>
             <div className="flex items-center gap-2 mb-3">
               <div className={cn("flex items-center justify-center w-8 h-8 rounded-lg", m.bg)}>
                 <m.icon className={cn("w-4 h-4", m.color)} />
@@ -120,7 +120,7 @@ export default function ForecastingPage() {
       </div>
 
       {/* Main Forecast Chart */}
-      <div className="glass-card-static p-6">
+      <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
         <div className="flex items-center justify-between mb-6">
           <div>
             <h3 className="text-lg font-semibold">Actual vs Forecast</h3>
@@ -154,7 +154,7 @@ export default function ForecastingPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Weekly Seasonality */}
-        <div className="glass-card-static p-6">
+        <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
           <h3 className="text-base font-semibold mb-1">Weekly Seasonality</h3>
           <p className="text-xs text-muted-foreground mb-4">Average demand by day of week</p>
           <ResponsiveContainer width="100%" height={220}>
@@ -169,7 +169,7 @@ export default function ForecastingPage() {
         </div>
 
         {/* Monthly Seasonality */}
-        <div className="glass-card-static p-6">
+        <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
           <h3 className="text-base font-semibold mb-1">Monthly Seasonality</h3>
           <p className="text-xs text-muted-foreground mb-4">Demand pattern across months</p>
           <ResponsiveContainer width="100%" height={220}>
@@ -185,7 +185,7 @@ export default function ForecastingPage() {
       </div>
 
       {/* Demand Heatmap Calendar */}
-      <div className="glass-card-static p-6">
+      <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
         <h3 className="text-base font-semibold mb-1">Demand Heatmap</h3>
         <p className="text-xs text-muted-foreground mb-4">Daily demand intensity over the last 90 days</p>
         <div className="flex gap-1 text-[10px] text-muted-foreground mb-2 pl-8">

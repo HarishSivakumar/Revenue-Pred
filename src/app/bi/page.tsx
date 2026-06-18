@@ -55,7 +55,7 @@ export default function BIPage() {
 
         <TabsContent value="revenue" className="space-y-6 mt-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="glass-card-static p-6">
+            <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
               <h3 className="text-base font-semibold mb-1">Revenue Trend</h3>
               <p className="text-xs text-muted-foreground mb-4">30-day rolling revenue</p>
               <ResponsiveContainer width="100%" height={280}>
@@ -74,7 +74,7 @@ export default function BIPage() {
                 </AreaChart>
               </ResponsiveContainer>
             </div>
-            <div className="glass-card-static p-6">
+            <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
               <h3 className="text-base font-semibold mb-1">Revenue by Route</h3>
               <p className="text-xs text-muted-foreground mb-4">Top performing routes</p>
               <ResponsiveContainer width="100%" height={280}>
@@ -88,7 +88,7 @@ export default function BIPage() {
               </ResponsiveContainer>
             </div>
           </div>
-          <div className="glass-card-static p-6">
+          <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
             <h3 className="text-base font-semibold mb-1">Monthly Revenue Seasonality</h3>
             <p className="text-xs text-muted-foreground mb-4">Revenue patterns across months</p>
             <ResponsiveContainer width="100%" height={260}>
@@ -105,7 +105,7 @@ export default function BIPage() {
 
         <TabsContent value="bookings" className="space-y-6 mt-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="glass-card-static p-6">
+            <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
               <h3 className="text-base font-semibold mb-1">DEL-BOM Booking Trend</h3>
               <p className="text-xs text-muted-foreground mb-4">Daily booking volumes</p>
               <ResponsiveContainer width="100%" height={280}>
@@ -124,7 +124,7 @@ export default function BIPage() {
                 </AreaChart>
               </ResponsiveContainer>
             </div>
-            <div className="glass-card-static p-6">
+            <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
               <h3 className="text-base font-semibold mb-1">Multi-Route Comparison</h3>
               <p className="text-xs text-muted-foreground mb-4">Booking trends across top routes</p>
               <ResponsiveContainer width="100%" height={280}>
@@ -146,7 +146,7 @@ export default function BIPage() {
         <TabsContent value="loadfactor" className="space-y-6 mt-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {Object.entries(OCCUPANCY_TRENDS).slice(0, 4).map(([route, data]) => (
-              <div key={route} className="glass-card-static p-6">
+              <div key={route} className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
                 <h3 className="text-base font-semibold mb-1">{route} Load Factor</h3>
                 <p className="text-xs text-muted-foreground mb-4">30-day load factor trend</p>
                 <ResponsiveContainer width="100%" height={220}>
@@ -170,7 +170,7 @@ export default function BIPage() {
         </TabsContent>
 
         <TabsContent value="airports" className="space-y-6 mt-4">
-          <div className="glass-card-static p-6">
+          <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
             <h3 className="text-base font-semibold mb-1">Revenue by Route</h3>
             <p className="text-xs text-muted-foreground mb-4">Top 8 routes by total revenue</p>
             <ResponsiveContainer width="100%" height={400}>
@@ -187,7 +187,7 @@ export default function BIPage() {
 
         <TabsContent value="customers" className="space-y-6 mt-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="glass-card-static p-6">
+            <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
               <h3 className="text-base font-semibold mb-1">Customer Segments</h3>
               <p className="text-xs text-muted-foreground mb-4">Distribution of customer types</p>
               <ResponsiveContainer width="100%" height={280}>
@@ -201,7 +201,7 @@ export default function BIPage() {
                 </PieChart>
               </ResponsiveContainer>
             </div>
-            <div className="glass-card-static p-6">
+            <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
               <h3 className="text-base font-semibold mb-1">Revenue by Segment</h3>
               <p className="text-xs text-muted-foreground mb-4">Average revenue per customer segment</p>
               <ResponsiveContainer width="100%" height={280}>
@@ -222,7 +222,7 @@ export default function BIPage() {
         </TabsContent>
 
         <TabsContent value="forecast" className="space-y-6 mt-4">
-          <div className="glass-card-static p-6">
+          <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
             <h3 className="text-base font-semibold mb-1">Forecast Accuracy by Route</h3>
             <p className="text-xs text-muted-foreground mb-4">Model performance across top routes</p>
             <ResponsiveContainer width="100%" height={300}>

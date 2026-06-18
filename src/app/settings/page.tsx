@@ -30,7 +30,7 @@ export default function SettingsPage() {
       </div>
 
       {/* Workspace Settings */}
-      <div className="glass-card-static p-6">
+      <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
         <div className="flex items-center gap-3 mb-6">
           <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-primary/10">
             <Plane className="w-5 h-5 text-primary" />
@@ -62,7 +62,7 @@ export default function SettingsPage() {
       </div>
 
       {/* Theme & Preferences */}
-      <div className="glass-card-static p-6">
+      <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
         <div className="flex items-center gap-3 mb-6">
           <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-violet-400/10">
             <Palette className="w-5 h-5 text-violet-400" />
@@ -111,7 +111,7 @@ export default function SettingsPage() {
       </div>
 
       {/* Integrations */}
-      <div className="glass-card-static p-6">
+      <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
         <div className="flex items-center gap-3 mb-6">
           <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-amber-400/10">
             <Key className="w-5 h-5 text-amber-400" />
@@ -140,7 +140,7 @@ export default function SettingsPage() {
       </div>
 
       {/* Future Domains */}
-      <div className="glass-card-static p-6">
+      <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
         <div className="flex items-center gap-3 mb-6">
           <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-blue-400/10">
             <Globe className="w-5 h-5 text-blue-400" />

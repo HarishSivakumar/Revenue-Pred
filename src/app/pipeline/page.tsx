@@ -33,7 +33,7 @@ export default function PipelinePage() {
           { label: "Avg Duration", value: PIPELINE_STATS.avgDuration, icon: Clock, color: "text-violet-400" },
           { label: "Failures (24h)", value: PIPELINE_STATS.failuresLast24h.toString(), icon: AlertTriangle, color: "text-red-400" },
         ].map((stat, i) => (
-          <div key={stat.label} className="glass-card p-5 animate-fade-in" style={{ animationDelay: `${i * 80}ms` }}>
+          <div key={stat.label} className="bg-card border border-border/40 shadow-sm rounded-xl p-5 animate-fade-in" style={{ animationDelay: `${i * 80}ms` }}>
             <div className="flex items-center gap-2 mb-3">
               <stat.icon className={cn("w-4 h-4", stat.color)} />
               <span className="text-xs text-muted-foreground">{stat.label}</span>
@@ -49,7 +49,7 @@ export default function PipelinePage() {
           const config = statusConfig[pipeline.status];
           const StatusIcon = config.icon;
           return (
-            <div key={pipeline.id} className="glass-card-static overflow-hidden">
+            <div key={pipeline.id} className="bg-card border border-border/40 shadow-sm rounded-xl overflow-hidden">
               {/* Pipeline Header */}
               <div className="flex items-center justify-between p-5 border-b border-border/30">
                 <div className="flex items-center gap-4">

@@ -42,7 +42,7 @@ export default function DynamicPricingPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Current vs Recommended */}
         <div className="lg:col-span-2">
-          <div className="glass-card-static p-6">
+          <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
             <div className="flex items-center gap-2 mb-6">
               <Zap className="w-5 h-5 text-primary" />
               <h3 className="text-lg font-semibold">Pricing Recommendation</h3>
@@ -115,7 +115,7 @@ export default function DynamicPricingPage() {
         </div>
 
         {/* Reasons */}
-        <div className="glass-card-static p-6">
+        <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
           <div className="flex items-center gap-2 mb-4">
             <Shield className="w-4 h-4 text-primary" />
             <h3 className="text-base font-semibold">Pricing Signals</h3>
@@ -141,7 +141,7 @@ export default function DynamicPricingPage() {
       </div>
 
       {/* Price Simulation */}
-      <div className="glass-card-static p-6">
+      <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
         <h3 className="text-lg font-semibold mb-1">Price Simulation</h3>
         <p className="text-sm text-muted-foreground mb-6">Revenue curve across different fare levels</p>
         <ResponsiveContainer width="100%" height={340}>
@@ -160,7 +160,7 @@ export default function DynamicPricingPage() {
       </div>
 
       {/* Pricing History */}
-      <div className="glass-card-static p-6">
+      <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
         <h3 className="text-base font-semibold mb-4">Pricing Decision History</h3>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">

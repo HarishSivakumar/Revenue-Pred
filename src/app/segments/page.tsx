@@ -27,7 +27,7 @@ export default function SegmentsPage() {
       {/* Segment Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {SEGMENTS.map((seg, i) => (
-          <div key={seg.id} className="glass-card p-6 animate-fade-in" style={{ animationDelay: `${i * 100}ms` }}>
+          <div key={seg.id} className="bg-card border border-border/40 shadow-sm rounded-xl p-6 animate-fade-in" style={{ animationDelay: `${i * 100}ms` }}>
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
                 <div className="flex items-center justify-center w-10 h-10 rounded-xl" style={{ backgroundColor: `${seg.color}15` }}>
@@ -68,7 +68,7 @@ export default function SegmentsPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Segment Distribution Pie */}
-        <div className="glass-card-static p-6">
+        <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
           <h3 className="text-base font-semibold mb-1">Segment Distribution</h3>
           <p className="text-xs text-muted-foreground mb-4">Customer breakdown by segment</p>
           <ResponsiveContainer width="100%" height={280}>
@@ -95,7 +95,7 @@ export default function SegmentsPage() {
         </div>
 
         {/* CLV Trend */}
-        <div className="glass-card-static p-6">
+        <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
           <h3 className="text-base font-semibold mb-1">Customer Lifetime Value</h3>
           <p className="text-xs text-muted-foreground mb-4">Monthly CLV trend by segment</p>
           <ResponsiveContainer width="100%" height={280}>
@@ -114,7 +114,7 @@ export default function SegmentsPage() {
       </div>
 
       {/* Top Customers Table */}
-      <div className="glass-card-static p-6">
+      <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
         <h3 className="text-base font-semibold mb-4">Top Customers</h3>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
@@ -157,7 +157,7 @@ export default function SegmentsPage() {
       </div>
 
       {/* Retention Heatmap */}
-      <div className="glass-card-static p-6">
+      <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
         <h3 className="text-base font-semibold mb-1">Cohort Retention Analysis</h3>
         <p className="text-xs text-muted-foreground mb-4">Customer retention by monthly cohort</p>
         <div className="overflow-x-auto">

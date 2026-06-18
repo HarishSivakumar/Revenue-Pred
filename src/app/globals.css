@@ -51,9 +51,6 @@
   --color-success: var(--success);
   --color-warning: var(--warning);
   --color-info: var(--info);
-  --color-glass: var(--glass);
-  --color-glass-border: var(--glass-border);
-  --color-glass-hover: var(--glass-hover);
 }
 
 /* Light theme */
@@ -93,9 +90,6 @@
   --sidebar-accent-foreground: oklch(0.13 0.015 260);
   --sidebar-border: oklch(0.90 0.01 260);
   --sidebar-ring: oklch(0.65 0.2 260);
-  --glass: oklch(1 0 0 / 60%);
-  --glass-border: oklch(0.13 0.015 260 / 10%);
-  --glass-hover: oklch(0.96 0.01 260 / 80%);
 }
 
 /* Dark theme */
@@ -135,33 +129,6 @@
   --sidebar-accent-foreground: oklch(0.96 0.005 260);
   --sidebar-border: oklch(0.25 0.015 260);
   --sidebar-ring: oklch(0.65 0.2 260);
-  --glass: oklch(0.15 0.015 260 / 60%);
-  --glass-border: oklch(0.40 0.015 260 / 15%);
-  --glass-hover: oklch(0.20 0.015 260 / 80%);
-}
-
-/* ===== Glassmorphism Utilities ===== */
-.glass-card {
-  background: var(--glass);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--glass-border);
-  border-radius: 1rem;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.glass-card:hover {
-  background: var(--glass-hover);
-  border-color: oklch(0.50 0.015 260 / 25%);
-  box-shadow: 0 8px 32px oklch(0 0 0 / 20%), 0 0 0 1px oklch(0.65 0.2 260 / 5%);
-}
-
-.glass-card-static {
-  background: var(--glass);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--glass-border);
-  border-radius: 1rem;
 }
 
 /* ===== KPI Card Glow ===== */

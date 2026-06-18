@@ -27,7 +27,7 @@ function KPICards() {
           <div
             key={kpi.id}
             className={cn(
-              "glass-card kpi-glow p-4 cursor-pointer animate-fade-in",
+              "bg-card border border-border/40 shadow-sm rounded-xl kpi-glow p-4 cursor-pointer animate-fade-in",
               `delay-${(index + 1) * 100}`
             )}
             style={{ animationDelay: `${index * 80}ms` }}
@@ -60,7 +60,7 @@ function KPICards() {
 
 function RevenueTrendChart() {
   return (
-    <div className="glass-card-static p-6">
+    <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h3 className="text-lg font-semibold">Revenue Trend</h3>
@@ -128,7 +128,7 @@ function RevenueTrendChart() {
 function TopRoutesChart() {
   const colors = ["#3B82F6", "#6366F1", "#8B5CF6", "#A855F7", "#C084FC", "#D8B4FE", "#E9D5FF", "#F3E8FF"];
   return (
-    <div className="glass-card-static p-6">
+    <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
       <h3 className="text-lg font-semibold mb-1">Top Revenue Drivers</h3>
       <p className="text-sm text-muted-foreground mb-6">Monthly route revenue ranking</p>
       <ResponsiveContainer width="100%" height={320}>
@@ -169,7 +169,7 @@ function TopRoutesChart() {
 function AirportHeatmap() {
   const maxRevenue = Math.max(...AIRPORTS.map((a) => a.revenue));
   return (
-    <div className="glass-card-static p-6">
+    <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
       <h3 className="text-lg font-semibold mb-1">Airport Revenue Map</h3>
       <p className="text-sm text-muted-foreground mb-6">Revenue distribution across Indian airports</p>
       <div className="relative w-full h-[320px] bg-accent/20 rounded-xl overflow-hidden">
@@ -223,7 +223,7 @@ function RecentAlerts() {
   };
 
   return (
-    <div className="glass-card-static p-6">
+    <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
       <div className="flex items-center justify-between mb-4">
         <div>
           <h3 className="text-lg font-semibold">Recent Alerts</h3>

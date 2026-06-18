@@ -48,7 +48,7 @@ export default function RouteAnalyticsPage() {
           <SelectTrigger className="w-[200px] bg-accent/40 border-border/30">
             <SelectValue />
           </SelectTrigger>
-          <SelectContent className="bg-card/95 backdrop-blur-xl border-border/50">
+          <SelectContent className="bg-card border-border/50">
             {POPULAR_ROUTES.slice(0, 10).map((r) => (
               <SelectItem key={`${r.origin}-${r.destination}`} value={`${r.origin}-${r.destination}`}>
                 {r.label}
@@ -61,7 +61,7 @@ export default function RouteAnalyticsPage() {
       {/* KPI Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {kpis.map((kpi, i) => (
-          <div key={kpi.label} className="glass-card p-5 animate-fade-in" style={{ animationDelay: `${i * 80}ms` }}>
+          <div key={kpi.label} className="bg-card border border-border/40 shadow-sm rounded-xl p-5 animate-fade-in" style={{ animationDelay: `${i * 80}ms` }}>
             <div className="flex items-center gap-2 mb-3">
               <kpi.icon className={cn("w-4 h-4", kpi.color)} />
               <span className="text-sm text-muted-foreground">{kpi.label}</span>
@@ -80,7 +80,7 @@ export default function RouteAnalyticsPage() {
       {/* Charts Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Booking Trend */}
-        <div className="glass-card-static p-6">
+        <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
           <h3 className="text-base font-semibold mb-1">Booking Trend</h3>
           <p className="text-xs text-muted-foreground mb-4">Daily bookings over last 30 days</p>
           <ResponsiveContainer width="100%" height={240}>
@@ -101,7 +101,7 @@ export default function RouteAnalyticsPage() {
         </div>
 
         {/* Occupancy Trend */}
-        <div className="glass-card-static p-6">
+        <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
           <h3 className="text-base font-semibold mb-1">Occupancy Trend</h3>
           <p className="text-xs text-muted-foreground mb-4">Daily occupancy rate</p>
           <ResponsiveContainer width="100%" height={240}>
@@ -122,7 +122,7 @@ export default function RouteAnalyticsPage() {
         </div>
 
         {/* Fare Trend */}
-        <div className="glass-card-static p-6">
+        <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
           <h3 className="text-base font-semibold mb-1">Fare Trend</h3>
           <p className="text-xs text-muted-foreground mb-4">Average fare variation</p>
           <ResponsiveContainer width="100%" height={240}>
@@ -137,7 +137,7 @@ export default function RouteAnalyticsPage() {
         </div>
 
         {/* Competitor Comparison */}
-        <div className="glass-card-static p-6">
+        <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
           <h3 className="text-base font-semibold mb-1">Competitor Price Comparison</h3>
           <p className="text-xs text-muted-foreground mb-4">30-day fare comparison across airlines</p>
           <ResponsiveContainer width="100%" height={240}>
@@ -156,7 +156,7 @@ export default function RouteAnalyticsPage() {
       </div>
 
       {/* Competitor Table */}
-      <div className="glass-card-static p-6">
+      <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
         <h3 className="text-base font-semibold mb-4">Competitor Fare Breakdown</h3>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
@@ -205,7 +205,7 @@ export default function RouteAnalyticsPage() {
       </div>
 
       {/* Weekly Performance */}
-      <div className="glass-card-static p-6">
+      <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
         <h3 className="text-base font-semibold mb-4">Weekly Route Performance</h3>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">

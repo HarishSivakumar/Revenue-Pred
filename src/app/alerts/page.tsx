@@ -73,7 +73,7 @@ export default function AlertsPage() {
             <div
               key={alert.id}
               className={cn(
-                "glass-card-static p-5 animate-fade-in border-l-[3px] transition-all",
+                "bg-card border border-border/40 shadow-sm rounded-xl p-5 animate-fade-in border-l-[3px] transition-all",
                 config.borderColor,
                 !alert.isRead && "ring-1 ring-primary/10"
               )}

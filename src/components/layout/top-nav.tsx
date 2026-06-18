@@ -27,7 +27,7 @@ export function TopNav() {
   const [notifications] = useState(3);
 
   return (
-    <header className="sticky top-0 z-30 h-16 border-b border-border/50 bg-background/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-30 h-16 border-b border-border/50 bg-background">
       <div className="flex items-center justify-between h-full px-6">
         {/* Left: Workspace Selector */}
         <div className="flex items-center gap-4">
@@ -39,7 +39,7 @@ export function TopNav() {
               <span className="text-sm font-medium">Airline Workspace</span>
               <ChevronDown className="w-3.5 h-3.5 text-muted-foreground" />
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="w-64 bg-card/95 backdrop-blur-xl border-border/50">
+            <DropdownMenuContent align="start" className="w-64 bg-card border-border/50">
               <DropdownMenuGroup>
                 <DropdownMenuLabel className="text-xs text-muted-foreground">Workspaces</DropdownMenuLabel>
                 {DOMAIN_WORKSPACES.map((ws) => {
@@ -99,7 +99,7 @@ export function TopNav() {
                 </span>
               )}
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-80 bg-card/95 backdrop-blur-xl border-border/50">
+            <DropdownMenuContent align="end" className="w-80 bg-card border-border/50">
               <DropdownMenuGroup>
                 <DropdownMenuLabel>Notifications</DropdownMenuLabel>
                 <DropdownMenuSeparator />
@@ -139,7 +139,7 @@ export function TopNav() {
                 <p className="text-[10px] text-muted-foreground">Revenue Analyst</p>
               </div>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-48 bg-card/95 backdrop-blur-xl border-border/50">
+            <DropdownMenuContent align="end" className="w-48 bg-card border-border/50">
               <DropdownMenuGroup>
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />

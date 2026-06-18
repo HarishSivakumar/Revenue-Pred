@@ -44,7 +44,7 @@ export default function CopilotPage() {
   return (
     <div className="h-[calc(100vh-8rem)] flex gap-4">
       {/* Left: Conversation History */}
-      <div className="w-64 shrink-0 glass-card-static flex flex-col">
+      <div className="w-64 shrink-0 bg-card border border-border/40 shadow-sm rounded-xl flex flex-col">
         <div className="p-4 border-b border-border/30">
           <Button variant="outline" className="w-full gap-2 text-sm border-border/50">
             <Plus className="w-4 h-4" /> New Chat
@@ -73,7 +73,7 @@ export default function CopilotPage() {
       </div>
 
       {/* Center: Chat Area */}
-      <div className="flex-1 flex flex-col glass-card-static">
+      <div className="flex-1 flex flex-col bg-card border border-border/40 shadow-sm rounded-xl">
         {/* Chat Header */}
         <div className="flex items-center gap-3 p-4 border-b border-border/30">
           <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary/20">
@@ -192,7 +192,7 @@ export default function CopilotPage() {
       <div className="w-72 shrink-0 space-y-4">
         {/* Generated Chart */}
         {lastAssistantMsg?.chartData && (
-          <div className="glass-card-static p-4">
+          <div className="bg-card border border-border/40 shadow-sm rounded-xl p-4">
             <div className="flex items-center gap-2 mb-3">
               <BarChart3 className="w-4 h-4 text-primary" />
               <h4 className="text-xs font-semibold">{lastAssistantMsg.chartTitle}</h4>
@@ -211,7 +211,7 @@ export default function CopilotPage() {
 
         {/* Generated SQL */}
         {lastAssistantMsg?.sql && (
-          <div className="glass-card-static p-4">
+          <div className="bg-card border border-border/40 shadow-sm rounded-xl p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <Code className="w-4 h-4 text-primary" />
@@ -229,7 +229,7 @@ export default function CopilotPage() {
 
         {/* Sources */}
         {lastAssistantMsg?.sources && (
-          <div className="glass-card-static p-4">
+          <div className="bg-card border border-border/40 shadow-sm rounded-xl p-4">
             <div className="flex items-center gap-2 mb-3">
               <Database className="w-4 h-4 text-primary" />
               <h4 className="text-xs font-semibold">Data Sources</h4>
@@ -247,7 +247,7 @@ export default function CopilotPage() {
 
         {/* Suggested Actions */}
         {lastAssistantMsg?.actions && (
-          <div className="glass-card-static p-4">
+          <div className="bg-card border border-border/40 shadow-sm rounded-xl p-4">
             <div className="flex items-center gap-2 mb-3">
               <Sparkles className="w-4 h-4 text-primary" />
               <h4 className="text-xs font-semibold">Suggested Actions</h4>

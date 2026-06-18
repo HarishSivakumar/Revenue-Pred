@@ -98,7 +98,7 @@ export default function ExplorerPage() {
       </div>
 
       {/* Filters */}
-      <div className="glass-card-static p-4">
+      <div className="bg-card border border-border/40 shadow-sm rounded-xl p-4">
         <div className="flex items-center gap-3 flex-wrap">
           <div className="relative flex-1 min-w-[200px]">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
@@ -113,7 +113,7 @@ export default function ExplorerPage() {
             <SelectTrigger className="w-[140px] bg-accent/30 border-border/30">
               <SelectValue placeholder="Origin" />
             </SelectTrigger>
-            <SelectContent className="bg-card/95 backdrop-blur-xl border-border/50">
+            <SelectContent className="bg-card border-border/50">
               <SelectItem value="all">All Origins</SelectItem>
               {origins.map((o) => <SelectItem key={o} value={o}>{o}</SelectItem>)}
             </SelectContent>
@@ -122,7 +122,7 @@ export default function ExplorerPage() {
             <SelectTrigger className="w-[160px] bg-accent/30 border-border/30">
               <SelectValue placeholder="Class" />
             </SelectTrigger>
-            <SelectContent className="bg-card/95 backdrop-blur-xl border-border/50">
+            <SelectContent className="bg-card border-border/50">
               <SelectItem value="all">All Classes</SelectItem>
               {classes.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
             </SelectContent>
@@ -144,7 +144,7 @@ export default function ExplorerPage() {
       </div>
 
       {/* Table */}
-      <div className="glass-card-static overflow-hidden">
+      <div className="bg-card border border-border/40 shadow-sm rounded-xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
