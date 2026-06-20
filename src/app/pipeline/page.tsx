@@ -2,6 +2,7 @@
 
 import { PIPELINES, PIPELINE_STATS } from "@/data/pipeline";
 import { cn } from "@/lib/utils";
+import { useAppStore } from "@/stores/app-store";
 import { Badge } from "@/components/ui/badge";
 import { formatRelativeTime } from "@/lib/formatters";
 import {
@@ -18,11 +19,15 @@ const statusConfig = {
 };
 
 export default function PipelinePage() {
+  const { dateRange } = useAppStore();
+  const fmt = (d: Date) => d.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
+  const periodLabel = `${fmt(dateRange.from)} – ${fmt(dateRange.to)}`;
+
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold tracking-tight">Pipeline Monitor</h1>
-        <p className="text-sm text-muted-foreground mt-1">Apache Airflow-style data pipeline monitoring</p>
+        <p className="text-sm text-muted-foreground mt-1">{periodLabel} · Data pipeline run history</p>
       </div>
 
       {/* Stats */}

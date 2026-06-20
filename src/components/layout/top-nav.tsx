@@ -18,6 +18,7 @@ import {
   Search, Bell, Plane, Hotel, ShoppingCart, Car,
   ChevronDown, User, LogOut, Settings, Lock,
 } from "lucide-react";
+import { DateRangePicker } from "./date-range-picker";
 
 const domainIcons: Record<string, React.ComponentType<{ className?: string }>> = {
   Plane, Hotel, ShoppingCart, Car,
@@ -87,8 +88,9 @@ export function TopNav() {
           </div>
         </div>
 
-        {/* Right: Notifications + Profile */}
+        {/* Right: Date Range + Notifications + Profile */}
         <div className="flex items-center gap-3">
+          <DateRangePicker />
           {/* Notifications */}
           <DropdownMenu>
             <DropdownMenuTrigger className="relative p-2 rounded-lg hover:bg-accent/60 transition-colors outline-none">

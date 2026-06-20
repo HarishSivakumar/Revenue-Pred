@@ -5,6 +5,7 @@ import { ROUTE_DATA, COMPETITOR_PRICES, BOOKING_TRENDS, OCCUPANCY_TRENDS, FARE_T
 import { POPULAR_ROUTES } from "@/data/airports";
 import { cn } from "@/lib/utils";
 import { formatCurrency, formatNumber } from "@/lib/formatters";
+import { useAppStore } from "@/stores/app-store";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
@@ -23,12 +24,24 @@ const tooltipStyle = {
 
 export default function RouteAnalyticsPage() {
   const [selectedRoute, setSelectedRoute] = useState("DEL-BOM");
+  const { dateRange } = useAppStore();
+
   const route = ROUTE_DATA[selectedRoute] || ROUTE_DATA["DEL-BOM"];
   const competitors = COMPETITOR_PRICES[selectedRoute] || COMPETITOR_PRICES["DEL-BOM"];
-  const bookingTrend = BOOKING_TRENDS[selectedRoute] || BOOKING_TRENDS["DEL-BOM"];
-  const occupancyTrend = OCCUPANCY_TRENDS[selectedRoute] || OCCUPANCY_TRENDS["DEL-BOM"];
-  const fareTrend = FARE_TRENDS[selectedRoute] || FARE_TRENDS["DEL-BOM"];
-  const competitorComparison = generateCompetitorComparison(selectedRoute);
+
+  const filterByDate = <T extends { date: string }>(arr: T[]) =>
+    arr.filter((d) => {
+      const date = new Date(d.date);
+      return date >= dateRange.from && date <= dateRange.to;
+    });
+
+  const bookingTrend = filterByDate(BOOKING_TRENDS[selectedRoute] || BOOKING_TRENDS["DEL-BOM"]);
+  const occupancyTrend = filterByDate(OCCUPANCY_TRENDS[selectedRoute] || OCCUPANCY_TRENDS["DEL-BOM"]);
+  const fareTrend = filterByDate(FARE_TRENDS[selectedRoute] || FARE_TRENDS["DEL-BOM"]);
+  const competitorComparison = filterByDate(generateCompetitorComparison(selectedRoute));
+
+  const fmt = (d: Date) => d.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
+  const periodLabel = `${fmt(dateRange.from)} – ${fmt(dateRange.to)}`;
 
   const kpis = [
     { label: "Revenue", value: formatCurrency(route.revenue, true), change: 12.3, icon: IndianRupee, color: "text-blue-400" },
@@ -42,7 +55,7 @@ export default function RouteAnalyticsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Route Analytics</h1>
-          <p className="text-sm text-muted-foreground mt-1">Deep-dive into route-level performance metrics</p>
+          <p className="text-sm text-muted-foreground mt-1">{periodLabel} · Deep-dive into route-level performance</p>
         </div>
         <Select value={selectedRoute} onValueChange={(v) => v && setSelectedRoute(v)}>
           <SelectTrigger className="w-[200px] bg-accent/40 border-border/30">
@@ -82,7 +95,7 @@ export default function RouteAnalyticsPage() {
         {/* Booking Trend */}
         <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
           <h3 className="text-base font-semibold mb-1">Booking Trend</h3>
-          <p className="text-xs text-muted-foreground mb-4">Daily bookings over last 30 days</p>
+          <p className="text-xs text-muted-foreground mb-4">{periodLabel} · {bookingTrend.length} days</p>
           <ResponsiveContainer width="100%" height={240}>
             <AreaChart data={bookingTrend}>
               <defs>
@@ -103,7 +116,7 @@ export default function RouteAnalyticsPage() {
         {/* Occupancy Trend */}
         <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
           <h3 className="text-base font-semibold mb-1">Occupancy Trend</h3>
-          <p className="text-xs text-muted-foreground mb-4">Daily occupancy rate</p>
+          <p className="text-xs text-muted-foreground mb-4">{periodLabel} · load factor</p>
           <ResponsiveContainer width="100%" height={240}>
             <AreaChart data={occupancyTrend}>
               <defs>
@@ -124,7 +137,7 @@ export default function RouteAnalyticsPage() {
         {/* Fare Trend */}
         <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
           <h3 className="text-base font-semibold mb-1">Fare Trend</h3>
-          <p className="text-xs text-muted-foreground mb-4">Average fare variation</p>
+          <p className="text-xs text-muted-foreground mb-4">{periodLabel} · avg fare variation</p>
           <ResponsiveContainer width="100%" height={240}>
             <LineChart data={fareTrend}>
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(148,163,184,0.08)" />
@@ -139,7 +152,7 @@ export default function RouteAnalyticsPage() {
         {/* Competitor Comparison */}
         <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
           <h3 className="text-base font-semibold mb-1">Competitor Price Comparison</h3>
-          <p className="text-xs text-muted-foreground mb-4">30-day fare comparison across airlines</p>
+          <p className="text-xs text-muted-foreground mb-4">{periodLabel} · fare comparison across airlines</p>
           <ResponsiveContainer width="100%" height={240}>
             <LineChart data={competitorComparison}>
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(148,163,184,0.08)" />

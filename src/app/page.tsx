@@ -4,6 +4,7 @@ import { DASHBOARD_KPIS, REVENUE_TREND, TOP_ROUTES, RECENT_ALERTS } from "@/data
 import { AIRPORTS } from "@/data/airports";
 import { cn } from "@/lib/utils";
 import { formatCurrency } from "@/lib/formatters";
+import { useAppStore } from "@/stores/app-store";
 import { Badge } from "@/components/ui/badge";
 import {
   IndianRupee, Ticket, Gauge, Users, TrendingUp, TrendingDown,
@@ -59,29 +60,27 @@ function KPICards() {
 }
 
 function RevenueTrendChart() {
+  const { dateRange } = useAppStore();
+
+  const filtered = REVENUE_TREND.filter((d) => {
+    const date = new Date(d.date);
+    return date >= dateRange.from && date <= dateRange.to;
+  });
+
+  const fmt = (d: Date) =>
+    d.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
+  const periodLabel = `${fmt(dateRange.from)} – ${fmt(dateRange.to)}`;
+
   return (
     <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h3 className="text-lg font-semibold">Revenue Trend</h3>
-          <p className="text-sm text-muted-foreground">Last 30 days performance</p>
-        </div>
-        <div className="flex gap-2">
-          {["7D", "30D", "90D"].map((period) => (
-            <button
-              key={period}
-              className={cn(
-                "px-3 py-1 rounded-md text-xs font-medium transition-colors",
-                period === "30D" ? "bg-primary/20 text-primary" : "text-muted-foreground hover:bg-accent"
-              )}
-            >
-              {period}
-            </button>
-          ))}
+          <p className="text-sm text-muted-foreground">{periodLabel} · {filtered.length} days</p>
         </div>
       </div>
       <ResponsiveContainer width="100%" height={320}>
-        <AreaChart data={REVENUE_TREND}>
+        <AreaChart data={filtered}>
           <defs>
             <linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="#3B82F6" stopOpacity={0.3} />
@@ -272,12 +271,19 @@ function RecentAlerts() {
 }
 
 export default function DashboardPage() {
+  const { dateRange } = useAppStore();
+  const fmt = (d: Date) => d.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
+
   return (
     <div className="space-y-6">
       {/* Page Header */}
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
-        <p className="text-sm text-muted-foreground mt-1">Real-time airline revenue intelligence overview</p>
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
+          <p className="text-sm text-muted-foreground mt-1">
+            {fmt(dateRange.from)} – {fmt(dateRange.to)} · Real-time airline revenue intelligence
+          </p>
+        </div>
       </div>
 
       {/* KPI Cards */}

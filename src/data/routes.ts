@@ -55,27 +55,27 @@ function generateTrend(baseLine: number, days: number, volatility: number): Time
 }
 
 export const BOOKING_TRENDS: Record<string, TimeSeriesPoint[]> = {
-  "DEL-BOM": generateTrend(280, 30, 80),
-  "DEL-BLR": generateTrend(240, 30, 60),
-  "BOM-HYD": generateTrend(200, 30, 50),
-  "DEL-HYD": generateTrend(170, 30, 45),
-  "BOM-BLR": generateTrend(155, 30, 40),
+  "DEL-BOM": generateTrend(280, 365, 80),
+  "DEL-BLR": generateTrend(240, 365, 60),
+  "BOM-HYD": generateTrend(200, 365, 50),
+  "DEL-HYD": generateTrend(170, 365, 45),
+  "BOM-BLR": generateTrend(155, 365, 40),
 };
 
 export const OCCUPANCY_TRENDS: Record<string, TimeSeriesPoint[]> = {
-  "DEL-BOM": generateTrend(86, 30, 12),
-  "DEL-BLR": generateTrend(82, 30, 10),
-  "BOM-HYD": generateTrend(78, 30, 14),
-  "DEL-HYD": generateTrend(75, 30, 11),
-  "BOM-BLR": generateTrend(80, 30, 9),
+  "DEL-BOM": generateTrend(86, 365, 12),
+  "DEL-BLR": generateTrend(82, 365, 10),
+  "BOM-HYD": generateTrend(78, 365, 14),
+  "DEL-HYD": generateTrend(75, 365, 11),
+  "BOM-BLR": generateTrend(80, 365, 9),
 };
 
 export const FARE_TRENDS: Record<string, TimeSeriesPoint[]> = {
-  "DEL-BOM": generateTrend(5065, 30, 600),
-  "DEL-BLR": generateTrend(5365, 30, 500),
-  "BOM-HYD": generateTrend(4838, 30, 450),
-  "DEL-HYD": generateTrend(5040, 30, 520),
-  "BOM-BLR": generateTrend(5132, 30, 480),
+  "DEL-BOM": generateTrend(5065, 365, 600),
+  "DEL-BLR": generateTrend(5365, 365, 500),
+  "BOM-HYD": generateTrend(4838, 365, 450),
+  "DEL-HYD": generateTrend(5040, 365, 520),
+  "BOM-BLR": generateTrend(5132, 365, 480),
 };
 
 // Generate competitor fare comparison over time
@@ -86,7 +86,7 @@ export function generateCompetitorComparison(routeId: string): { date: string; I
   const akasaBase = competitors.find(c => c.airline === "Akasa Air")?.fare || 4700;
   const data: { date: string; IndiGo: number; "Air India": number; "Akasa Air": number }[] = [];
   const now = new Date();
-  for (let i = 29; i >= 0; i--) {
+  for (let i = 364; i >= 0; i--) {
     const d = new Date(now);
     d.setDate(d.getDate() - i);
     data.push({

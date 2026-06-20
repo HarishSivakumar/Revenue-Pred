@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ALL_ALERTS } from "@/data/alerts";
 import { cn } from "@/lib/utils";
+import { useAppStore } from "@/stores/app-store";
 import { Badge } from "@/components/ui/badge";
 import { formatRelativeTime } from "@/lib/formatters";
 import { AlertTriangle, Info, Bell, Filter, CheckCircle } from "lucide-react";
@@ -15,26 +16,36 @@ const severityConfig = {
 
 export default function AlertsPage() {
   const [filter, setFilter] = useState<"all" | "critical" | "warning" | "info">("all");
+  const { dateRange } = useAppStore();
 
-  const filteredAlerts = filter === "all" ? ALL_ALERTS : ALL_ALERTS.filter((a) => a.severity === filter);
+  // Filter alerts by date range first, then by severity
+  const rangeAlerts = ALL_ALERTS.filter((a) => {
+    const ts = new Date(a.timestamp);
+    return ts >= dateRange.from && ts <= dateRange.to;
+  });
+
+  const filteredAlerts = filter === "all" ? rangeAlerts : rangeAlerts.filter((a) => a.severity === filter);
 
   const counts = {
-    all: ALL_ALERTS.length,
-    critical: ALL_ALERTS.filter((a) => a.severity === "critical").length,
-    warning: ALL_ALERTS.filter((a) => a.severity === "warning").length,
-    info: ALL_ALERTS.filter((a) => a.severity === "info").length,
+    all: rangeAlerts.length,
+    critical: rangeAlerts.filter((a) => a.severity === "critical").length,
+    warning: rangeAlerts.filter((a) => a.severity === "warning").length,
+    info: rangeAlerts.filter((a) => a.severity === "info").length,
   };
+
+  const fmt = (d: Date) => d.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
+  const periodLabel = `${fmt(dateRange.from)} – ${fmt(dateRange.to)}`;
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Alerts</h1>
-          <p className="text-sm text-muted-foreground mt-1">System notifications and anomaly detection alerts</p>
+          <p className="text-sm text-muted-foreground mt-1">{periodLabel} · {rangeAlerts.length} alerts</p>
         </div>
         <Badge variant="outline" className="text-xs gap-1.5">
           <Bell className="w-3 h-3" />
-          {ALL_ALERTS.filter((a) => !a.isRead).length} unread
+          {rangeAlerts.filter((a) => !a.isRead).length} unread
         </Badge>
       </div>
 

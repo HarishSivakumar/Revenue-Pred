@@ -6,8 +6,8 @@ function generateForecastData(days: number): { actual: TimeSeriesPoint[]; foreca
   const now = new Date();
   const baseValue = 280;
 
-  // Past data (actual + forecast overlap)
-  for (let i = days + 14; i >= 0; i--) {
+  // Always generate 365 days of historical actuals (date range picker controls how much is shown)
+  for (let i = 365; i >= 1; i--) {
     const d = new Date(now);
     d.setDate(d.getDate() - i);
     const dateStr = d.toISOString().split("T")[0];
@@ -15,29 +15,11 @@ function generateForecastData(days: number): { actual: TimeSeriesPoint[]; foreca
     const weekendEffect = dow === 0 || dow === 6 ? 60 : 0;
     const seasonality = Math.sin((d.getDate() / 30) * Math.PI * 2) * 25;
     const noise = (Math.random() - 0.5) * 40;
-    const trend = ((days + 14 - i) / (days + 14)) * 30;
-    const val = Math.round(baseValue + weekendEffect + seasonality + noise + trend);
-
-    if (i > 0) {
-      actual.push({ date: dateStr, value: val });
-    }
-
-    // Forecast starts 7 days before now and extends into future
-    if (i <= days + 7) {
-      const forecastNoise = (Math.random() - 0.5) * 15;
-      const forecastVal = Math.round(baseValue + weekendEffect + seasonality + forecastNoise + trend);
-      const uncertainty = Math.max(10, i * 2.5);
-      forecast.push({
-        date: dateStr,
-        value: forecastVal,
-        predicted: forecastVal,
-        upperBound: forecastVal + uncertainty,
-        lowerBound: forecastVal - uncertainty,
-      });
-    }
+    const trend = ((365 - i) / 365) * 30;
+    actual.push({ date: dateStr, value: Math.round(baseValue + weekendEffect + seasonality + noise + trend) });
   }
 
-  // Future forecast
+  // Future forecast: starts from today + 1, extends `days` into the future
   for (let i = 1; i <= days; i++) {
     const d = new Date(now);
     d.setDate(d.getDate() + i);
@@ -49,7 +31,6 @@ function generateForecastData(days: number): { actual: TimeSeriesPoint[]; foreca
     const trend = 30 + (i / days) * 20;
     const val = Math.round(baseValue + weekendEffect + seasonality + noise + trend);
     const uncertainty = Math.max(15, i * 3);
-
     forecast.push({
       date: dateStr,
       value: val,

@@ -9,19 +9,19 @@ export const DASHBOARD_KPIS: KPICard[] = [
   { id: "active-routes", title: "Active Routes", value: "154", change: 0, changeLabel: "no change", icon: "Route", trend: "neutral" },
 ];
 
-// Generate 30-day revenue trend
+// Generate 365-day revenue trend so any date range preset has real data to filter
 function generateRevenueTrend(): TimeSeriesPoint[] {
   const data: TimeSeriesPoint[] = [];
   const now = new Date();
   const baseRevenue = 11000000;
 
-  for (let i = 29; i >= 0; i--) {
+  for (let i = 364; i >= 0; i--) {
     const date = new Date(now);
     date.setDate(date.getDate() - i);
     const dayOfWeek = date.getDay();
     const weekendBoost = dayOfWeek === 0 || dayOfWeek === 6 ? 1500000 : 0;
     const randomVariation = (Math.random() - 0.4) * 2000000;
-    const trendGrowth = (30 - i) * 40000;
+    const trendGrowth = (364 - i) * 10000;
 
     data.push({
       date: date.toISOString().split("T")[0],

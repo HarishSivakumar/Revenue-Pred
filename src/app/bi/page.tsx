@@ -7,6 +7,7 @@ import { MONTHLY_SEASONALITY } from "@/data/forecasting";
 import { SEGMENTS } from "@/data/segments";
 import { cn } from "@/lib/utils";
 import { formatCurrency } from "@/lib/formatters";
+import { useAppStore } from "@/stores/app-store";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Download, Filter } from "lucide-react";
@@ -25,13 +26,28 @@ const PIE_COLORS = ["#3B82F6", "#8B5CF6", "#F97316", "#10B981", "#EF4444"];
 
 export default function BIPage() {
   const [activeTab, setActiveTab] = useState("revenue");
+  const { dateRange } = useAppStore();
+
+  const filterByDate = <T extends { date: string }>(arr: T[]) =>
+    arr.filter((d) => { const dt = new Date(d.date); return dt >= dateRange.from && dt <= dateRange.to; });
+
+  const fmt = (d: Date) => d.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
+  const periodLabel = `${fmt(dateRange.from)} – ${fmt(dateRange.to)}`;
+
+  const filteredRevenue = filterByDate(REVENUE_TREND);
+  const filteredBookings = filterByDate(BOOKING_TRENDS["DEL-BOM"]);
+  const filteredBLR = filterByDate(BOOKING_TRENDS["DEL-BLR"]);
+  const filteredHYD = filterByDate(BOOKING_TRENDS["BOM-HYD"]);
+  const filteredOccupancy = Object.fromEntries(
+    Object.entries(OCCUPANCY_TRENDS).map(([k, v]) => [k, filterByDate(v)])
+  );
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Business Intelligence</h1>
-          <p className="text-sm text-muted-foreground mt-1">Comprehensive analytics dashboards and reporting</p>
+          <p className="text-sm text-muted-foreground mt-1">{periodLabel} · Comprehensive analytics and reporting</p>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" size="sm" className="gap-2 border-border/50">
@@ -57,9 +73,9 @@ export default function BIPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
               <h3 className="text-base font-semibold mb-1">Revenue Trend</h3>
-              <p className="text-xs text-muted-foreground mb-4">30-day rolling revenue</p>
+              <p className="text-xs text-muted-foreground mb-4">{periodLabel} · {filteredRevenue.length} days</p>
               <ResponsiveContainer width="100%" height={280}>
-                <AreaChart data={REVENUE_TREND}>
+                <AreaChart data={filteredRevenue}>
                   <defs>
                     <linearGradient id="biRevGrad" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="0%" stopColor="#3B82F6" stopOpacity={0.3} />
@@ -107,9 +123,9 @@ export default function BIPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
               <h3 className="text-base font-semibold mb-1">DEL-BOM Booking Trend</h3>
-              <p className="text-xs text-muted-foreground mb-4">Daily booking volumes</p>
+              <p className="text-xs text-muted-foreground mb-4">{periodLabel} · daily booking volumes</p>
               <ResponsiveContainer width="100%" height={280}>
-                <AreaChart data={BOOKING_TRENDS["DEL-BOM"]}>
+                <AreaChart data={filteredBookings}>
                   <defs>
                     <linearGradient id="biBookGrad" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="0%" stopColor="#10B981" stopOpacity={0.3} />
@@ -134,9 +150,9 @@ export default function BIPage() {
                   <YAxis stroke="rgba(148,163,184,0.3)" fontSize={10} />
                   <Tooltip contentStyle={tooltipStyle} />
                   <Legend wrapperStyle={{ fontSize: 11 }} />
-                  <Line data={BOOKING_TRENDS["DEL-BOM"]} type="monotone" dataKey="value" stroke="#3B82F6" strokeWidth={2} dot={false} name="DEL-BOM" />
-                  <Line data={BOOKING_TRENDS["DEL-BLR"]} type="monotone" dataKey="value" stroke="#8B5CF6" strokeWidth={2} dot={false} name="DEL-BLR" />
-                  <Line data={BOOKING_TRENDS["BOM-HYD"]} type="monotone" dataKey="value" stroke="#F97316" strokeWidth={2} dot={false} name="BOM-HYD" />
+                  <Line data={filteredBookings} type="monotone" dataKey="value" stroke="#3B82F6" strokeWidth={2} dot={false} name="DEL-BOM" />
+                  <Line data={filteredBLR} type="monotone" dataKey="value" stroke="#8B5CF6" strokeWidth={2} dot={false} name="DEL-BLR" />
+                  <Line data={filteredHYD} type="monotone" dataKey="value" stroke="#F97316" strokeWidth={2} dot={false} name="BOM-HYD" />
                 </LineChart>
               </ResponsiveContainer>
             </div>
@@ -145,7 +161,7 @@ export default function BIPage() {
 
         <TabsContent value="loadfactor" className="space-y-6 mt-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {Object.entries(OCCUPANCY_TRENDS).slice(0, 4).map(([route, data]) => (
+            {Object.entries(filteredOccupancy).slice(0, 4).map(([route, data]) => (
               <div key={route} className="bg-card border border-border/40 shadow-sm rounded-xl p-6">
                 <h3 className="text-base font-semibold mb-1">{route} Load Factor</h3>
                 <p className="text-xs text-muted-foreground mb-4">30-day load factor trend</p>

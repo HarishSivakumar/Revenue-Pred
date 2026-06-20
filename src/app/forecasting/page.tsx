@@ -4,6 +4,7 @@ import { useState } from "react";
 import { getForecastData, FORECAST_METRICS, SEASONALITY_DATA, MONTHLY_SEASONALITY, DEMAND_CALENDAR } from "@/data/forecasting";
 import { POPULAR_ROUTES } from "@/data/airports";
 import { cn } from "@/lib/utils";
+import { useAppStore } from "@/stores/app-store";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Target, Activity, BarChart3, TrendingUp } from "lucide-react";
@@ -21,17 +22,25 @@ const tooltipStyle = {
 export default function ForecastingPage() {
   const [horizon, setHorizon] = useState<7 | 30 | 90>(30);
   const [selectedRoute, setSelectedRoute] = useState("DEL-BOM");
+  const { dateRange } = useAppStore();
   const forecastData = getForecastData(horizon);
   const metrics = FORECAST_METRICS[horizon];
 
-  // Merge actual and forecast data for combined chart
+  const fmt = (d: Date) => d.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
+
+  // Merge actual + forecast: actual filtered by dateRange, forecast always includes future dates
   const mergedData = (() => {
+    const today = new Date();
     const map = new Map<string, { date: string; actual?: number; forecast?: number; upper?: number; lower?: number }>();
-    forecastData.actual.forEach((p) => {
-      const existing = map.get(p.date) || { date: p.date };
-      existing.actual = p.value;
-      map.set(p.date, existing);
-    });
+    // Actuals: only show from dateRange.from onward
+    forecastData.actual
+      .filter((p) => new Date(p.date) >= dateRange.from)
+      .forEach((p) => {
+        const existing = map.get(p.date) || { date: p.date };
+        existing.actual = p.value;
+        map.set(p.date, existing);
+      });
+    // Forecast: always show (future dates are always >= today >= dateRange.from)
     forecastData.forecast.forEach((p) => {
       const existing = map.get(p.date) || { date: p.date };
       existing.forecast = p.value;
@@ -72,7 +81,9 @@ export default function ForecastingPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Demand Forecasting</h1>
-          <p className="text-sm text-muted-foreground mt-1">AI-powered demand predictions with confidence intervals</p>
+          <p className="text-sm text-muted-foreground mt-1">
+            History: {fmt(dateRange.from)} – today · Forecast: next {horizon} days
+          </p>
         </div>
         <div className="flex items-center gap-3">
           <Select value={selectedRoute} onValueChange={(v) => v && setSelectedRoute(v)}>
@@ -124,7 +135,9 @@ export default function ForecastingPage() {
         <div className="flex items-center justify-between mb-6">
           <div>
             <h3 className="text-lg font-semibold">Actual vs Forecast</h3>
-            <p className="text-sm text-muted-foreground">Demand forecast with confidence interval bands</p>
+            <p className="text-sm text-muted-foreground">
+              Historical from {fmt(dateRange.from)} · {horizon}D forecast ahead
+            </p>
           </div>
           <div className="flex items-center gap-4 text-xs">
             <div className="flex items-center gap-1.5"><div className="w-3 h-0.5 bg-blue-400 rounded" />Actual</div>

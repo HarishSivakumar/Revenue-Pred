@@ -4,6 +4,7 @@ import { useState } from "react";
 import { PRICING_DATA, PRICE_SIMULATION, PRICING_HISTORY } from "@/data/pricing";
 import { cn } from "@/lib/utils";
 import { formatCurrency } from "@/lib/formatters";
+import { useAppStore } from "@/stores/app-store";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -27,15 +28,24 @@ const reasonIcons: Record<string, React.ComponentType<{ className?: string }>> =
 
 export default function DynamicPricingPage() {
   const [applied, setApplied] = useState(false);
+  const { dateRange } = useAppStore();
   const { currentFare, recommendedFare, confidenceScore, expectedImpact, reasons } = PRICING_DATA;
   const fareDiff = recommendedFare - currentFare;
   const fareDiffPct = ((fareDiff / currentFare) * 100).toFixed(1);
+
+  const filteredHistory = PRICING_HISTORY.filter((h) => {
+    const d = new Date(h.date);
+    return d >= dateRange.from && d <= dateRange.to;
+  });
+
+  const fmt = (d: Date) => d.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
+  const periodLabel = `${fmt(dateRange.from)} – ${fmt(dateRange.to)}`;
 
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold tracking-tight">Dynamic Pricing</h1>
-        <p className="text-sm text-muted-foreground mt-1">AI-powered fare optimization for DEL → BOM</p>
+        <p className="text-sm text-muted-foreground mt-1">{periodLabel} · AI-powered fare optimization for DEL → BOM</p>
       </div>
 
       {/* Main Pricing Cards */}
@@ -175,7 +185,14 @@ export default function DynamicPricingPage() {
               </tr>
             </thead>
             <tbody>
-              {PRICING_HISTORY.map((h, i) => (
+              {filteredHistory.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="py-6 text-center text-sm text-muted-foreground">
+                    No pricing decisions in the selected date range
+                  </td>
+                </tr>
+              ) : (
+                filteredHistory.map((h, i) => (
                 <tr key={i} className="border-b border-border/30 hover:bg-accent/20 transition-colors">
                   <td className="py-3 px-4 text-muted-foreground">{h.date}</td>
                   <td className="py-3 px-4 font-medium">{h.route}</td>
@@ -191,7 +208,8 @@ export default function DynamicPricingPage() {
                     {h.impact}
                   </td>
                 </tr>
-              ))}
+              ))
+              )}
             </tbody>
           </table>
         </div>

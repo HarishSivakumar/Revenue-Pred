@@ -3,6 +3,7 @@
 import { SEGMENTS, TOP_CUSTOMERS, CLV_TREND, RETENTION_DATA } from "@/data/segments";
 import { cn } from "@/lib/utils";
 import { formatCurrency, formatNumber } from "@/lib/formatters";
+import { useAppStore } from "@/stores/app-store";
 import { Badge } from "@/components/ui/badge";
 import { Users, Crown, Repeat, TrendingUp } from "lucide-react";
 import {
@@ -17,11 +18,15 @@ const tooltipStyle = {
 };
 
 export default function SegmentsPage() {
+  const { dateRange } = useAppStore();
+  const fmt = (d: Date) => d.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
+  const periodLabel = `${fmt(dateRange.from)} – ${fmt(dateRange.to)}`;
+
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold tracking-tight">Customer Segments</h1>
-        <p className="text-sm text-muted-foreground mt-1">ML-powered customer segmentation using KMeans clustering</p>
+        <p className="text-sm text-muted-foreground mt-1">{periodLabel} · Business-defined segment taxonomy</p>
       </div>
 
       {/* Segment Cards */}
